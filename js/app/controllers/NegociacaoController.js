@@ -21,6 +21,15 @@ class NegociacaoController{
     }
 
     criaDataDeString(data){
-        return new Date(data.split('-'));
+        return new Date(
+            data
+            .split('-')
+            .map((item, i) => {
+                if(i === 1){
+                    return item - 1;
+                }
+                return item;
+            })
+        );
     }
 }
