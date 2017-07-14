@@ -24,12 +24,7 @@ class NegociacaoController{
         return new Date(
             data
             .split('-')
-            .map((item, i) => {
-                if(i === 1){
-                    return item - 1;
-                }
-                return item;
-            })
+            .map((item, i) => item - i % 2)
         );
     }
 }
