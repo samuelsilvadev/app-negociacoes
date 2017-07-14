@@ -10,11 +10,17 @@ class NegociacaoController{
 
     adiciona(e){
         e.preventDefault();
+
         let negociacao = new Negociacao(
-            new Date(this._inputData.value), 
+            this.criaDataDeString(this._inputData.value),
             this._inputQuantidade.value, 
             this._inputValor.value
         );
+
         console.log(negociacao);
+    }
+
+    criaDataDeString(data){
+        return new Date(data.split('-'));
     }
 }
