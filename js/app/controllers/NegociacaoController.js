@@ -17,12 +17,12 @@ class NegociacaoController{
             this._inputValor.value
         );
 
-        console.log(negociacao);
+        console.log(negociacao);        
     }
 
     criaDataDeString(data){
         return new Date(
-            data
+            ...data
             .split('-')
             .map((item, i) => item - i % 2)
         );
