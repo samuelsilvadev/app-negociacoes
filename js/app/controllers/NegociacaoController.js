@@ -10,21 +10,15 @@ class NegociacaoController{
 
     adiciona(e){
         e.preventDefault();
+        let helper = new DateHelper();
 
         let negociacao = new Negociacao(
-            this.criaDataDeString(this._inputData.value),
+            helper.criaDataDeString(this._inputData.value),
             this._inputQuantidade.value, 
             this._inputValor.value
         );
 
         console.log(negociacao);        
-    }
-
-    criaDataDeString(data){
-        return new Date(
-            ...data
-            .split('-')
-            .map((item, i) => item - i % 2)
-        );
+        console.log(helper.formataDataParaHumanos(negociacao.data));
     }
 }
