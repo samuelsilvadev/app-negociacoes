@@ -1,5 +1,10 @@
 class DateHelper{
     
+    constructor(){
+
+        throw new Error('DateHelper não pode ser instanciada');
+    }
+
     static criaDataDeString(data){
         return new Date(
             ...data
