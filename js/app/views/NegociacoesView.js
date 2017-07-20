@@ -27,6 +27,6 @@ class NegociacoesView{
     }
 
     update(){
-       this._elemento.innerHTML =_template();  
+       this._elemento.innerHTML = this._template();  
     }
 }
