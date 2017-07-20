@@ -20,6 +20,6 @@ class Negociacao{
     }
 
     get valor(){
-        return this.valor;
+        return this._valor;
     }
 }
