@@ -28,11 +28,13 @@ class NegociacaoController{
     }
 
     apagarNegociacoes(){
-        this._listaNegociacoes.apagarNegociacoes();
-        this._viewNegociacoes.update(this._listaNegociacoes);
+        if(confirm('Deseja realmente apagar a lista de negociações?')){        
+            this._listaNegociacoes.apagarNegociacoes();
+            this._viewNegociacoes.update(this._listaNegociacoes);
 
-        this._mensagem.texto = 'Negociações apagadas com sucesso';
-        this._mensagemView.update(this._mensagem);
+            this._mensagem.texto = 'Negociações apagadas com sucesso';
+            this._mensagemView.update(this._mensagem);
+        }
     }
 
     _criaNegociacao(){
