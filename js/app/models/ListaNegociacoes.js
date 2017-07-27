@@ -1,19 +1,18 @@
 class ListaNegociacoes{
 
-    constructor(contexto, atualizacao){
+    constructor(atualizacao){
         this._listaNegociacoes = [];
-        this._contexto = contexto;
         this._atualizacao = atualizacao;
     }
 
     adiciona(negociacao){
         this._listaNegociacoes.push(negociacao);
-        Reflect.apply(this._atualizacao, this._contexto, [this]);
+        this._atualizacao(this);
     }
 
     apagarNegociacoes(){
         this._listaNegociacoes = [];
-        Reflect.apply(this._atualizacao, this._contexto, [this]);
+        this._atualizacao(this);
     }
 
     get negociacoes(){
