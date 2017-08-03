@@ -7,20 +7,11 @@ class NegociacaoController{
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
         
-        let self = this;
-        this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
-
-            get(target, prop, receiver){
-                if(['adiciona', 'apagarNegociacoes'].includes(prop) && typeof(target[prop]) == typeof(Function)){
-                    return function(){
-                        Reflect.apply(target[prop], target, arguments);
-                        self._viewNegociacoes.update(target);
-                    }
-                }
-                return Reflect.get(target, prop, receiver);
-            }
-
-        })
+        this._listaNegociacoes = ProxyFactory.create(
+            new ListaNegociacoes(),
+            ['adiciona', 'apagarNegociacoes'],
+            model => this._viewNegociacoes.update(model)
+        )
 
         this._viewNegociacoes = new NegociacoesView($('#viewNegociacoes'));
         this._viewNegociacoes.update(this._listaNegociacoes);
