@@ -4,7 +4,7 @@ class ProxyFactory{
         return new Proxy(objeto, {
 
             get(target, prop, receiver){
-                if(props.includes(prop) && ProxyFactory._ehFUncao(target[prop])){
+                if(props.includes(prop) && ProxyFactory._ehFuncao(target[prop])){
                     return function(){
                         console.log('interceptando metodo');
                         let retorno = Reflect.apply(target[prop], target, arguments);
@@ -25,7 +25,7 @@ class ProxyFactory{
         })
     }
 
-    static _ehFUncao(funcao){
+    static _ehFuncao(funcao){
         return typeof(funcao == typeof(Function));
     }
 }

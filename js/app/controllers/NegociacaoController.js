@@ -30,15 +30,14 @@ class NegociacaoController{
 
     importaNegociacoes(){
         let service = new NegociacaoService();
-        service.obterNegociacaoDaSemana((err, negociacoes) => {
-            if(err){
-                this._exibeUmaMensagem(err);
-                return;
-            }
-
-            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-            this._exibeUmaMensagem('Negociações importadas com sucesso');
-        });
+        service.obterNegociacaoDaSemana()
+        .then(negociacoes => {
+            console.log(negociacoes);
+            negociacoes.forEach(negociacao => { 
+                this._listaNegociacoes.adiciona(negociacao)
+             });
+            this._exibeUmaMensagem('Negociação da semana obtida com sucesso');
+        }).catch(err => this._exibeUmaMensagem(err));
     }
 
     apagarNegociacoes(){
