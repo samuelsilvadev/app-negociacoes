@@ -32,10 +32,19 @@ class NegociacaoController{
         let service = new NegociacaoService();
         service.obterNegociacaoDaSemana()
         .then(negociacoes => {
-            console.log(negociacoes);
-            negociacoes.forEach(negociacao => { 
-                this._listaNegociacoes.adiciona(negociacao)
-             });
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._exibeUmaMensagem('Negociação da semana obtida com sucesso');
+        }).catch(err => this._exibeUmaMensagem(err));
+
+        service.obterNegociacaoDaSemanaAnterior()
+        .then(negociacoes => {
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+            this._exibeUmaMensagem('Negociação da semana obtida com sucesso');
+        }).catch(err => this._exibeUmaMensagem(err));
+
+        service.obterNegociacaoDaSemanaRetrasada()
+        .then(negociacoes => {
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
             this._exibeUmaMensagem('Negociação da semana obtida com sucesso');
         }).catch(err => this._exibeUmaMensagem(err));
     }
