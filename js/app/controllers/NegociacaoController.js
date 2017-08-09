@@ -44,6 +44,10 @@ class NegociacaoController{
         }
     }
 
+    ordena(coluna){
+        console.log(coluna);
+    }
+
     _criaNegociacao(){
         return new Negociacao(
             DateHelper.criaDataDeString(this._inputData.value),
