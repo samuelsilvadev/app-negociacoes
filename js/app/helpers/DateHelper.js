@@ -7,7 +7,7 @@ class DateHelper{
 
     static criaDataDeString(data){
         if(!(/\d{4}-\d{2}-\d{2}/.test(data)))
-            throw new Error('Padrão inválido, deve estar no padrão aaaa-mm-dd');
+            throw new Error('Data no padrão inválido, deve estar no padrão aaaa-mm-dd');
 
         return new Date(
             ...data
