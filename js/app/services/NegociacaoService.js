@@ -15,12 +15,8 @@ class NegociacaoService{
             this.obterNegociacaoDaSemanaAnterior(),
             this.obterNegociacaoDaSemanaRetrasada()            
         ])
-        .then(negociacoes => {
-            console.log(negociacoes);
-            return negociacoes
-                .reduce((arraymenor, array) => arraymenor.concat(array), []);             
-        })
-       .catch(err => { throw new Error(err)});
+        .then(negociacoes => negociacoes.reduce((arraymenor, array) => arraymenor.concat(array), []))
+        .catch(err => { throw new Error(err)});
     }
 
     obterNegociacaoDaSemana(){
