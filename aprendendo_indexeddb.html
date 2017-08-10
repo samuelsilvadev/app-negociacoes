@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aprendendo Indexeddb</title>
+</head>
+<body>
+    
+    <script>
+        
+        let openDb = window.indexedDB.open('app-negociacoes', 1);
+        
+        openDb.onupgradeneeded = e => {
+            console.log('Criando ou atualizando banco!');
+        };
+
+        openDb.onsucess = e => {
+            console.log('Conexão obtida com sucesso!');
+        };
+
+        openDb.onerror = e => {
+            console.log(e.target.error);
+        };
+
+    </script>
+</body>
+</html>
