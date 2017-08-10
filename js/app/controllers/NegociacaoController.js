@@ -22,11 +22,16 @@ class NegociacaoController{
 
     adiciona(e){
         e.preventDefault();
-        let negociacao = this._criaNegociacao();
-        this._listaNegociacoes.adiciona(negociacao);
+        try{
+            let negociacao = this._criaNegociacao();
+            this._listaNegociacoes.adiciona(negociacao);
         
-        this._exibeUmaMensagem('Negociação adicionada com sucesso');
-        this._limpaFormulario();
+            this._exibeUmaMensagem('Negociação adicionada com sucesso');
+            this._limpaFormulario();
+        }catch(e){
+            this._exibeUmaMensagem(e);
+        }
+
     }
 
     importaNegociacoes(){
