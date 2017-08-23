@@ -1,10 +1,11 @@
 
 let ConnectionFactory = (function () {
 
-    let dbName      = 'app-negociacoes';
-    let dbVersion   = 5;
-    let stores      = ['negociacoes'];
-    let connectionF = null;
+    const dbName        = 'app-negociacoes';
+    const dbVersion     = 5;
+    const stores        = ['negociacoes'];
+    let connectionF     = null;
+    let closeF          = null;
 
     return class ConnectionFactory{
 
@@ -23,8 +24,13 @@ let ConnectionFactory = (function () {
 
                 openDb.onsuccess = e => {
                     console.log('Conexão obtida com sucesso!');
-                    if(!connectionF)
+                    if(!connectionF){
                         connectionF = e.target.result;
+                        closeF = connectionF.close.bind(connectionF);
+                        connectionF.close = function(){
+                            throw new Error('Você não pode fechar a conexão');
+                        }
+                    }
                     resolve(connectionF);
                 };
 
@@ -32,6 +38,13 @@ let ConnectionFactory = (function () {
                     reject(e.target.error.name);
                 };
             });
+        }
+
+        static closeConnection(){
+            if(connectionF){
+                closeF();
+                connectionF = null;
+            }
         }
 
         static _createStores(connection){
