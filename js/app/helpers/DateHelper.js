@@ -17,6 +17,6 @@ class DateHelper{
     }
 
     static formataDataParaHumanos(dataIlegivel){
-        return `${dataIlegivel.getDate()}/${(dataIlegivel.getMonth() + 1)}/${dataIlegivel.getFullYear()}`
+        return `${dataIlegivel.getDate()}/${(dataIlegivel.getMonth() + 1)}/${dataIlegivel.getFullYear()}`;        
     }
 }

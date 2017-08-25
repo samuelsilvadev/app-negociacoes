@@ -30,7 +30,7 @@ class NegociacaoDao{
 
     listaTodos(){
             
-        return new Promise((reject, resolve) => {
+        return new Promise((resolve, reject) => {
 
             let cursor = this._getObjectStore().openCursor();
             
@@ -41,14 +41,17 @@ class NegociacaoDao{
 
                 if(ponteiroAtual){
                     let dado = ponteiroAtual.value;
-                    negociacoes.push(dado._data, dado._quantidade, dado._valor);
+                    negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
                     ponteiroAtual.continue();
-                }else{
+                }else{                
                     resolve(negociacoes);
                 }
             };
 
-            cursor.onerror = e => reject(e.target.error.name);                        
+            cursor.onerror = e => {
+                console.log(e.target.error);
+                reject('Não foi possível criar a negociação');
+            };                      
         });
     }
 }
