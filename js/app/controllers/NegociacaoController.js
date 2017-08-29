@@ -52,9 +52,18 @@ class NegociacaoController{
     }
 
     apagarNegociacoes(){
-        if(confirm('Deseja realmente apagar a lista de negociações?')){        
-            this._listaNegociacoes.apagarNegociacoes();
-            this._exibeUmaMensagem('Negociações apagadas com sucesso');
+        if(confirm('Deseja realmente apagar a lista de negociações?')){  
+                        
+            ConnectionFactory
+            .getConnection()
+                .then(conn => new NegociacaoDao(conn))
+                .then(dao => dao.apagarTodos())
+                .then(mens => {
+                    this._exibeUmaMensagem(mens);
+                    this._listaNegociacoes.apagarNegociacoes();
+                })
+                .catch(err => this._exibeUmaMensagem(err));
+            
         }
     }
 
