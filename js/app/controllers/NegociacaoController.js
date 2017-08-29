@@ -35,18 +35,18 @@ class NegociacaoController{
     }
 
     adiciona(e){
-        e.preventDefault();        
-        ConnectionFactory.getConnection()
-            .then(conn => {
-                let negociacao = this._criaNegociacao();                
-                new NegociacaoDao(conn)
-                    .adiciona(negociacao)
-                    .then(() => {
-                        this._listaNegociacoes.adiciona(negociacao);
-                        this._exibeUmaMensagem('Negociação adicionada com sucesso');
-                        this._limpaFormulario();
-                    });        
-            }).catch(e => this._exibeUmaMensagem(e));
+        e.preventDefault();   
+        
+        let service = new NegociacaoService();
+        let negociacao = this._criaNegociacao();
+        service
+            .cadastrar(negociacao)
+            .then(mensagem => {
+                this._listaNegociacoes.adiciona(negociacao);
+                this._exibeUmaMensagem(mensagem);
+                this._limpaFormulario();
+            })
+            .catch(e => this._exibeUmaMensagem(e))   
     }
 
     importaNegociacoes(){

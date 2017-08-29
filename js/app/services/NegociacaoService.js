@@ -45,4 +45,19 @@ class NegociacaoService{
                 })
                 .catch(err => { throw new Error(err)});
     }
+
+    cadastrar(negociacao){
+        
+        return ConnectionFactory.getConnection()
+        .then(conn => new NegociacaoDao(conn))
+        .then(dao => dao.adiciona(negociacao))
+        .then(() => 'Negociação adicionada com sucesso!')
+        .catch(e => {
+            throw new Error('Não foi possível adicionar' + e.target.name)
+        });
+    }
+
+    remover(){
+
+    }
 }
