@@ -47,7 +47,14 @@ class NegociacaoController{
         ConnectionFactory.getConnection()
             .then(conn =>  new NegociacaoDao(conn))
             .then(dao => {
-              service.obterNegociacoes()
+                service.obterNegociacoes()
+                .then(negociacoes => {
+                    return negociacoes.filter(negociacao => 
+                        !this._listaNegociacoes.negociacoes.some(negociacaoExistente => 
+                            JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)
+                        )
+                    );
+                })
                 .then(negociacoes => {
                     negociacoes.forEach(negociacao => {
                         dao.adiciona(negociacao);
