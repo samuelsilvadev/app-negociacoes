@@ -49,15 +49,44 @@ class NegociacaoService{
     cadastrar(negociacao){
         
         return ConnectionFactory.getConnection()
-        .then(conn => new NegociacaoDao(conn))
-        .then(dao => dao.adiciona(negociacao))
-        .then(() => 'Negociação adicionada com sucesso!')
-        .catch(e => {
-            throw new Error('Não foi possível adicionar' + e.target.name)
-        });
+            .then(conn => new NegociacaoDao(conn))
+            .then(dao => dao.adiciona(negociacao))
+            .then(mensagem => mensagem)
+            .catch(e => {
+                throw new Error('Não foi possível adicionar' + e.target.name)
+            });
     }
 
-    remover(){
 
+    lista(){
+         return ConnectionFactory.getConnection()
+            .then(conn => new NegociacaoDao(conn))
+            .then(dao => dao.listaTodos())
+            .catch(e => {
+                throw new Error('Não foi possível listar as negociações' + e.target.name)
+            });
+    }
+
+
+    apagar(){
+        return ConnectionFactory.getConnection()
+            .then(conn => new NegociacaoDao(conn))
+            .then(dao => dao.apagarTodos())
+            .then(mensagem => mensagem)
+            .catch(e => {
+                throw new Error('Não foi possível listar as negociações' + e.target.name)
+            });
+    }
+
+    importa(listaNegociacoes){
+        return this.obterNegociacoes()
+                .then(negociacoes => {
+                    return negociacoes.filter(negociacao => 
+                        !listaNegociacoes.some(negociacaoExistente => 
+                            JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)
+                        )
+                    );
+                })
+                .catch(e => this._exibeUmaMensagem(e));
     }
 }
