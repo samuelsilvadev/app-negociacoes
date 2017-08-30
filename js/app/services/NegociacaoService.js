@@ -83,9 +83,7 @@ class NegociacaoService{
                 .then(negociacoes => {
                     return negociacoes.filter(negociacao => 
                         !listaNegociacoes.some(negociacaoExistente => 
-                            JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)
-                        )
-                    );
+                            negociacao.isEquals(negociacaoExistente)));
                 })
                 .catch(e => this._exibeUmaMensagem(e));
     }
