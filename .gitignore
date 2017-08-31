@@ -69,3 +69,7 @@ package-lock.json
 
 
 # End of https://www.gitignore.io/api/node
+
+#codigo javascript ES5
+
+js/app/
