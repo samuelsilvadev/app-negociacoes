@@ -40,7 +40,7 @@ class NegociacaoController{
                     this._listaNegociacoes.adiciona(negociacao)))
              .catch(e => console.log(e));
         
-        setInterval(() => this.importaNegociacoes(), 3000);
+        //setInterval(() => this.importaNegociacoes(), 3000);
     }
 
     adiciona(e){
