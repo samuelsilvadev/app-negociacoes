@@ -1,3 +1,12 @@
+import {ListaNegociacoes} from '../models/ListaNegociacoes';
+import {Negociacao} from '../models/Negociacao';
+import {Mensagem} from '../models/Mensagem';
+import {Bind} from '../helpers/Bind';
+import {NegociacoesView} from '../views/NegociacoesView';
+import {MensagemView} from '../views/MensagemView';
+import {NegociacaoService} from '../services/NegociacaoService';
+import {DateHelper} from '../helpers/DateHelper';
+
 class NegociacaoController{
 
     constructor(){
@@ -102,4 +111,9 @@ class NegociacaoController{
     _exibeUmaMensagem(mensagem){
         this._mensagem.texto = mensagem;        
     }
+}
+
+let negociacaoController = new NegociacaoController();
+export function currentInstance(){
+    return negociacaoController;
 }
