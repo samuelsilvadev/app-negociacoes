@@ -6,12 +6,12 @@ import {NegociacoesView} from '../views/NegociacoesView';
 import {MensagemView} from '../views/MensagemView';
 import {NegociacaoService} from '../services/NegociacaoService';
 import {DateHelper} from '../helpers/DateHelper';
+import {Dom} from '../helpers/Dom';
 
-class NegociacaoController{
+class NegociacaoController extends Dom{
 
     constructor(){
-        let $ = document.querySelector.bind(document);
-
+       
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
