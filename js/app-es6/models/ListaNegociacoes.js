@@ -1,30 +1,32 @@
-export class ListaNegociacoes{
+export class ListaNegociacoes {
+	constructor() {
+		this._listaNegociacoes = [];
+	}
 
-    constructor(){
-        this._listaNegociacoes = [];        
-    }
+	adiciona(negociacao) {
+		this._listaNegociacoes.push(negociacao);
+	}
 
-    adiciona(negociacao){
-        this._listaNegociacoes.push(negociacao);        
-    }
+	apagarNegociacoes() {
+		this._listaNegociacoes = [];
+	}
 
-    apagarNegociacoes(){
-        this._listaNegociacoes = [];        
-    }
-    
-    ordena(criterio){
-        this._listaNegociacoes.sort(criterio);
-    }
+	ordena(criterio) {
+		this._listaNegociacoes.sort(criterio);
+	}
 
-    inverteOrdena(){
-        this._listaNegociacoes.reverse();
-    }
+	inverteOrdena() {
+		this._listaNegociacoes.reverse();
+	}
 
-    get negociacoes(){
-        return [].concat(this._listaNegociacoes);
-    }
+	get negociacoes() {
+		return [].concat(this._listaNegociacoes);
+	}
 
-    get volumeTotal(){
-        return this._listaNegociacoes.reduce((total, n) => total + n.volume, 0.0);
-    }
+	get volumeTotal() {
+		return this._listaNegociacoes.reduce(
+			(total, n) => total + n.volume,
+			0.0
+		);
+	}
 }

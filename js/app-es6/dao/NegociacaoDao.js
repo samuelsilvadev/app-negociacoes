@@ -1,72 +1,75 @@
-import {Negociacao} from '../models/Negociacao';
+import { Negociacao } from '../models/Negociacao';
 
-export class NegociacaoDao{
+export class NegociacaoDao {
+	constructor(connection) {
+		this._connection = connection;
+		this._store = 'negociacoes';
+	}
 
-    constructor(connection){
-        this._connection = connection;
-        this._store = 'negociacoes';
-    }
+	_getObjectStore() {
+		return this._connection
+			.transaction([this._store], 'readwrite')
+			.objectStore(this._store);
+	}
 
-     _getObjectStore(){
-        return this._connection
-                .transaction([this._store], 'readwrite')
-                .objectStore(this._store);
-    }
+	adiciona(negociacao) {
+		return new Promise((resolve, reject) => {
+			let request = this._getObjectStore().add(negociacao);
 
-    adiciona(negociacao){
-        return new Promise((resolve, reject) =>{
+			request.onsuccess = e => {
+				console.log('Inserido com sucesso');
+				resolve();
+			};
 
-            let request = this._getObjectStore().add(negociacao);
+			request.onerror = e => {
+				console.log(e.target.error);
+				reject('Não foi possível criar a negociação');
+			};
+		});
+	}
 
-            request.onsuccess = e => {
-                console.log('Inserido com sucesso');                
-                resolve();
-            };
+	listaTodos() {
+		return new Promise((resolve, reject) => {
+			let cursor = this._getObjectStore().openCursor();
 
-            request.onerror = e => {
-                console.log(e.target.error);
-                reject('Não foi possível criar a negociação');
-            };
-        })
-    }
+			let negociacoes = [];
 
-    listaTodos(){
-            
-        return new Promise((resolve, reject) => {
+			cursor.onsuccess = e => {
+				let ponteiroAtual = e.target.result;
 
-            let cursor = this._getObjectStore().openCursor();
-            
-            let negociacoes = [];
+				if (ponteiroAtual) {
+					let dado = ponteiroAtual.value;
+					negociacoes.push(
+						new Negociacao(
+							dado._data,
+							dado._quantidade,
+							dado._valor
+						)
+					);
+					ponteiroAtual.continue();
+				} else {
+					resolve(negociacoes);
+				}
+			};
 
-            cursor.onsuccess = e => {
-                let ponteiroAtual = e.target.result;
+			cursor.onerror = e => {
+				console.log(e.target.error);
+				reject('Não foi possível criar a negociação');
+			};
+		});
+	}
 
-                if(ponteiroAtual){
-                    let dado = ponteiroAtual.value;
-                    negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
-                    ponteiroAtual.continue();
-                }else{                
-                    resolve(negociacoes);
-                }
-            };
+	apagarTodos() {
+		return new Promise((resolve, reject) => {
+			let request = this._getObjectStore().clear();
 
-            cursor.onerror = e => {
-                console.log(e.target.error);
-                reject('Não foi possível criar a negociação');
-            };                      
-        });
-    }
+			request.onsuccess = e =>
+				resolve('Negociações removidas com sucesso');
 
-    apagarTodos(){
-        return new Promise((resolve, reject) => {        
-            let request = this._getObjectStore().clear();
-
-            request.onsuccess = e => resolve('Negociações removidas com sucesso');
-
-            request.onerror = e => {
-                console.log(e.target.error);
-                reject('Não foi possível remover as negociações');
-            };
-        });
-    }
+			request.onerror = e => {
+				console.log(e.target.error);
+				reject('Não foi possível remover as negociações');
+			};
+		});
+	}
 }

@@ -1,39 +1,34 @@
-import {Usuario} from '../models/Usuario'
-import {Dom} from '../helpers/Dom'
+import { Usuario } from '../models/Usuario';
+import { Dom } from '../helpers/Dom';
 
-export class UsuarioController extends Dom{
-    
-    constructor(){
-        this._nome = $('#nome');
-        this._sobreNome = $('#sobrenome');
-        this._dataNascimento = $('#data-nascimento');
-        this._email = $('#email');
-        this._senha = $('#senha');
-    }
+export class UsuarioController extends Dom {
+	constructor() {
+		super();
 
-    adiciona(e){
-        
-    }
+		const $ = super().$;
 
-    apaga(){
+		this._nome = $('#nome');
+		this._sobreNome = $('#sobrenome');
+		this._dataNascimento = $('#data-nascimento');
+		this._email = $('#email');
+		this._senha = $('#senha');
+	}
 
-    }
+	adiciona(e) {}
 
-    _criaUsuario(){
-        return new Usuario(
-            this._nome.value,
-            this._sobreNome.value,
-            this._dataNascimento.value,
-            this._email.value,
-            this._senha.value
-        );
-    }
+	apaga() {}
 
-    _limpaFormulario(){
-    
-    }
+	_criaUsuario() {
+		return new Usuario(
+			this._nome.value,
+			this._sobreNome.value,
+			this._dataNascimento.value,
+			this._email.value,
+			this._senha.value
+		);
+	}
 
-    _exibeUmaMensagem(mensagem){
-       
-    }
+	_limpaFormulario() {}
+
+	_exibeUmaMensagem(mensagem) {}
 }

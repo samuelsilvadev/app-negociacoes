@@ -1,20 +1,19 @@
-import {View} from './View';
-import {DateHelper} from '../helpers/DateHelper';
-import {currentInstance} from '../controllers/NegociacaoController';
+import { View } from './View';
+import { DateHelper } from '../helpers/DateHelper';
+import { currentInstance } from '../controllers/NegociacaoController';
 
-export class NegociacoesView extends View{
+export class NegociacoesView extends View {
+	constructor(elemento) {
+		super(elemento);
+		elemento.addEventListener('click', e => {
+			if (e.target.nodeName == 'TH') {
+				currentInstance().ordena(e.target.textContent.toLowerCase());
+			}
+		});
+	}
 
-    constructor(elemento){
-        super(elemento);
-        elemento.addEventListener('click', (e) => {
-            if(e.target.nodeName == 'TH'){
-                currentInstance().ordena(e.target.textContent.toLowerCase());
-            }
-        });
-    }
-
-    template(model){
-        return `
+	template(model) {
+		return `
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
@@ -26,8 +25,10 @@ export class NegociacoesView extends View{
             </thead>
             
             <tbody>
-            ${model.negociacoes.map(n => 
-                `
+            ${model.negociacoes
+				.map(
+					n =>
+						`
                     <tr>
                         <td>${DateHelper.formataDataParaHumanos(n.data)}</td>
                         <td>${n.quantidade}</td>
@@ -35,14 +36,15 @@ export class NegociacoesView extends View{
                         <td>${n.volume}</td>
                     </tr>
                 `
-            ).join('')}
+				)
+				.join('')}
             </tbody>
             
             <tfoot>
                 <td colspan="3"></td>
-                <td>${ model.volumeTotal }</td>
+                <td>${model.volumeTotal}</td>
             </tfoot>
         </table>
         `;
-    }
+	}
 }
